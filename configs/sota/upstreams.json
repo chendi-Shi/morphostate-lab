@@ -1,0 +1,52 @@
+{
+  "checked_on": "2026-10-21",
+  "repositories": [
+    {
+      "repo": "SydneyBioX/GHIST",
+      "revision": "917456be305fc82e92293ea272812e79675e821c",
+      "license": "GPL-3.0",
+      "branch": "main"
+    },
+    {
+      "repo": "yaosicong1999/Pixel2Gene",
+      "revision": "4f690ca2c629cc1a079fd07bf16ab2044e8cc460",
+      "license": "NOASSERTION",
+      "branch": "main"
+    },
+    {
+      "repo": "dcjones/proseg",
+      "revision": "4caa6f33d13133374f66b20ec5775f0c027806be",
+      "license": "NOASSERTION",
+      "branch": "main"
+    },
+    {
+      "repo": "bdsc-tds/SPLIT",
+      "revision": "e880e39c03a7036e11c9867701c76fdb26acc14c",
+      "license": "GPL-3.0",
+      "branch": "main"
+    },
+    {
+      "repo": "Gentles-lab/DeSpotX",
+      "revision": "3a9adce0b5412b3c0cb568106eb2c75fb55d3277",
+      "license": "MIT",
+      "branch": "main"
+    },
+    {
+      "repo": "YosefLab/resolvi-reproducibility",
+      "revision": "d3a8503e06f2ca1b5e649e2c256656fbe354050b",
+      "license": "not_declared",
+      "branch": "main"
+    },
+    {
+      "repo": "eldadshulman/path2space-extended",
+      "revision": "3817465a9a8f6c0b9d00871aad9799d0b1cc2a3e",
+      "license": "Apache-2.0",
+      "branch": "main"
+    }
+  ],
+  "voice": {
+    "paper": "https://arxiv.org/abs/2608.08366",
+    "status": "author code and weights not located from paper and targeted search; not claimed unavailable universally"
+  },
+  "notice": "Revisions verified through GitHub API. NOASSERTION means inspect upstream LICENSE; not an open-license claim. Wrappers do not redistribute author code or weights."
+}

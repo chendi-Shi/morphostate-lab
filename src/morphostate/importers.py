@@ -167,6 +167,18 @@ def merge_datasets(inputs, output) -> None:
     for field in ("feature_encoder", "covariate_columns"):
         if field in first.provenance:
             provenance[field] = first.provenance[field]
+    # Keep training provenance at the merged top level so downstream fold
+    # checks cannot accidentally overlook a fitted classifier inside a source
+    # dataset. Union is conservative when separate classifiers were fitted.
+    for field in ("covariate_fit_donors", "covariate_selection_donors"):
+        if any(field in dataset.provenance for dataset in datasets):
+            values = []
+            for dataset in datasets:
+                source = dataset.provenance.get(field, [])
+                if not isinstance(source, (list, tuple)):
+                    raise ValueError(f"{field} must be an explicit list of donor IDs")
+                values.extend(_check_identifiers(source, field, unique=True))
+            provenance[field] = sorted(set(values))
     combined = Dataset(
         counts=sparse.vstack([ds.counts for ds in datasets], format="csr"),
         features=np.concatenate([ds.features for ds in datasets]),

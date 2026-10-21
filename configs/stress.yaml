@@ -1,0 +1,32 @@
+data: ../data/stress/data
+graphs: ../data/stress/graphs
+output: ../runs/stress
+seed: 7
+preprocess:
+  max_genes: 4
+  min_train_cells: 1
+  max_dense_elements: 1000000
+training:
+  device: cpu
+  epochs: 60
+  max_steps: 200
+  patience: 15
+  batch_size: 64
+  lr: 0.01
+weak:
+  methods: [fixed, joint_relative, interval_relative, optimistic_relative, aggregate, random_assignment, ensemble]
+  ranks: [2]
+  hidden_dims: [0]
+  blocks_per_step: 2
+  ensemble_members: 2
+  max_bound_queries: 5000
+  aggregate_background: fixed_observed
+comparisons:
+  enabled: true
+  include_type_oracle: false
+  ranks: [2]
+  epochs: 60
+  patience: 15
+  hidden_dim: 8
+evaluation:
+  bootstrap_repetitions: 1000

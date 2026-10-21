@@ -5,6 +5,9 @@ permissions:
 jobs:
   cpu:
     runs-on: ubuntu-latest
+    env:
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -17,8 +20,19 @@ jobs:
       - run: python -m pytest -q
       - run: python -m morphostate demo --output data/demo
       - run: python -m morphostate run --config configs/demo.yaml
+      - run: python -m morphostate demo --output data/weak_demo --donors 6 --cells-per-donor 12 --genes 8 --features 4
+      - run: python -m morphostate synthetic-graphs --data data/weak_demo --output data/weak_demo_graphs
+      - run: python -m morphostate weak-run --config configs/weak_demo.yaml
+      - run: python -m morphostate suite --config configs/weak_suite.yaml
+      - run: python -m morphostate stress-case --output data/stress
+      - run: python -m morphostate stress-case --output data/stress_excluded --exclude-null
+      - run: python -m morphostate theory-diagnostics --data data/stress/data --graphs data/stress/graphs --predictions data/stress/truth.npz --output runs/stress_theory --reference-library 80 --model-key true_rates --baseline-key null_rates
       - run: python -m pip freeze > runs/demo/environment.txt
       - uses: actions/upload-artifact@v4
         with:
           name: synthetic-smoke-test
-          path: runs/demo/
+          path: |
+            runs/demo/
+            runs/weak_demo/
+            runs/weak_suite/
+            runs/stress_theory/

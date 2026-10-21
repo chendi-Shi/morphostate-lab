@@ -1,0 +1,30 @@
+# Edit local paths, donor IDs and the upstream config before running.
+# Commands/CSV format verified in official tutorials and inference.py.
+name: GHIST
+checkout: /path/to/GHIST
+revision: 917456be305fc82e92293ea272812e79675e821c
+locked_run: ../../runs/xenium_pilot
+output: ../../runs/ghist_reproduction
+# Use the actual interpreter of the separately installed GHIST environment.
+# Commit any tracked source modifications and pin that adaptation's new SHA.
+commands:
+  - argv: [/path/to/ghist/python, train.py, --config_file, /path/to/locked_ghist_config.json, --resume_epoch, '0', --fold_id, '1', --gpu_id, '0']
+  - argv: [/path/to/ghist/python, inference.py, --config_file, /path/to/locked_ghist_config.json, --epoch, last, --mode, val, --fold_id, '1', --gpu_id, '0']
+  # Replace last with the epoch fixed by validation before evaluating test.
+  - argv: [/path/to/ghist/python, inference.py, --config_file, /path/to/locked_ghist_config.json, --epoch, last, --mode, predict, --fold_id, '1', --gpu_id, '0']
+checkpoints:
+  - '{checkout}/experiments/your_experiment/model/your_selected_checkpoint.pth'
+declaration:
+  training_donors: [REPLACE_WITH_LOCKED_TRAIN_DONORS]
+  validation_donors: [REPLACE_WITH_LOCKED_VAL_DONORS]
+  encoder: GHIST author U-Net3+; record pretrained checkpoint source
+  input_mode: image
+  pretraining_overlap: unknown; audit before publication
+conversion:
+  adapter: ghist_csv
+  source: '{checkout}/experiments/your_experiment/predict_output/epoch_selected_expr.csv'
+  id_map: /path/to/ghist_to_locked_cell_ids.csv
+  # Native author output is log1p(raw counts); its conversion stays expected_counts.
+  # Only change to reference_library after training on normalized reference targets,
+  # recording that changed target protocol, and set the train-fitted reference value.
+  training_target_normalization: raw_counts

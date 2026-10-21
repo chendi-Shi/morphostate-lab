@@ -1,0 +1,34 @@
+base_config: weak_xenium.yaml
+output: ../runs/xenium_suite
+engine: weak
+folds: 5
+split_seed: 7
+val_fraction: 0.2
+seeds: [7, 17, 29]
+# Set group_column to a batch/TMA identifier to hold out entire correlated arrays.
+group_column: donor_id
+image_covariates:
+  enabled: true
+  neighbors: 12
+  epochs: 100
+  patience: 15
+variants:
+  main: {}
+  no_covariates:
+    weak:
+      methods: [fixed, joint_relative]
+      remove_covariates: true
+    comparisons:
+      enabled: false
+  linear:
+    weak:
+      methods: [fixed, joint_relative]
+      hidden_dims: [0]
+    comparisons:
+      enabled: false
+  nonlinear:
+    weak:
+      methods: [fixed, joint_relative]
+      hidden_dims: [64]
+    comparisons:
+      enabled: false

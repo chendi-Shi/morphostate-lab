@@ -12,6 +12,7 @@ import pandas as pd
 import torch
 import yaml
 
+from .covariates import check_covariate_provenance
 from .data import load_dataset
 from .metrics import bootstrap_donor_gain, donor_metrics, within_donor_type_permutation
 from .models import RidgePredictor, model_from_config
@@ -90,6 +91,9 @@ def run_experiment(config_path, output_override=None):
     x_raw, c_raw = data.features[chosen], data.covariates[chosen]
     split_cfg = config.get("split", {})
     split = make_donor_split(cells, seed=seed, **split_cfg)
+    check_covariate_provenance(data.provenance,
+                               {name: cells.iloc[idx].donor_id.astype(str).unique().tolist()
+                                for name, idx in split.items()})
     tr, va, te = split["train"], split["val"], split["test"]
     library = np.asarray(counts.sum(axis=1)).ravel().astype(np.float32)
     median_library = float(np.median(library[tr]))
@@ -110,7 +114,8 @@ def run_experiment(config_path, output_override=None):
     x_cond = x - np.column_stack([c, np.ones(len(c))]) @ cov_to_image
     x_cond = x_cond.astype(np.float32)
     output.mkdir(parents=True, exist_ok=True)
-    run_mode = "oracle" if source == "rna_oracle" else ("synthetic" if source == "synthetic" else "image_covariates")
+    run_mode = "oracle" if source == "rna_oracle" else (
+        "synthetic" if "synthetic" in (source, feature_source) else "image_covariates")
     write_json(output / "config.json", config)
     write_json(output / "provenance.json", {
         "mode": run_mode, "dataset": data.provenance, "seed": seed,
@@ -169,8 +174,35 @@ def run_experiment(config_path, output_override=None):
         rates[f"{mode}_ridge"] = np.expm1(np.clip(ridge.predict(x[te], c[te]), 0, 20))
         ridge_arrays = {f"{part}_{key}": val for part, comp in ridge.components_.items() for key, val in comp.items()}
         np.savez_compressed(output / f"{mode}_ridge_parameters.npz", **ridge_arrays)
+    model_metadata = {name: {"eligible_for_primary_ranking": run_mode != "oracle", "target_scope": "all_molecules"}
+                      for name in rates}
+    comparison_config = config.get("comparisons", {})
+    if comparison_config.get("enabled", False):
+        from .comparisons import fit_predict_comparisons
+        type_oracle = bool(comparison_config.get("include_type_oracle", False))
+        extra_rates, extra_metadata = fit_predict_comparisons(
+            x[tr], c[tr], y[tr], exposure[tr], x[va], c[va], y[va], exposure[va], x[te], c[te],
+            train_types=cells.iloc[tr].cell_type.to_numpy() if type_oracle else None,
+            test_types=cells.iloc[te].cell_type.to_numpy() if type_oracle else None,
+            train_donors=cells.iloc[tr].donor_id.to_numpy(), sample_weight=donor_weights(cells.iloc[tr]),
+            val_sample_weight=donor_weights(cells.iloc[va]), seed=seed,
+            ranks=comparison_config.get("ranks", ranks), epochs=int(comparison_config.get("epochs", 100)),
+            patience=int(comparison_config.get("patience", 15)), hidden_dim=int(comparison_config.get("hidden_dim", 64)),
+            alpha=float(comparison_config.get("alpha", 10)), learning_rate=float(comparison_config.get("lr", .001)),
+            batch_size=int(comparison_config.get("batch_size", 256)))
+        rates.update(extra_rates)
+        write_json(output / "comparison_selection.json", extra_metadata)
+        for name in extra_rates:
+            model_metadata[name] = dict(extra_metadata["models"].get(name, {}),
+                eligible_for_primary_ranking=run_mode != "oracle" and not name.endswith("_oracle"),
+                target_scope="all_molecules")
     evaluation = config.get("evaluation", {})
-    frames, summary = {}, {"mode": run_mode, "selected_rank": best_rank, "models": {}}
+    frames, summary = {}, {"mode": run_mode, "selected_rank": best_rank, "models": {},
+                           "model_metadata": model_metadata,
+                           "evaluation_groups": {
+                               "primary": [n for n, m in model_metadata.items() if m["eligible_for_primary_ranking"]],
+                               "target_mismatch_diagnostics": [n for n, m in model_metadata.items()
+                                                               if not m["eligible_for_primary_ranking"]]}}
     for name, rate in rates.items():
         frame = donor_metrics(y[te], rate, exposure[te], cells.iloc[te])
         frames[name] = frame

@@ -1,0 +1,40 @@
+# Prepared REGISTERED pilot input is required. No dataset is bundled.
+# Budgeted exact marginal bounds can be costly: start with a small complete graph.
+data: ../data/xenium_prepared
+graphs: ../data/xenium_graphs
+output: ../runs/xenium_weak
+seed: 7
+allow_oracle: false
+split:
+  val_fraction: 0.2
+  test_fraction: 0.2
+preprocess:
+  max_genes: 64
+  min_train_cells: 10
+  max_dense_elements: 10000000
+training:
+  device: auto
+  epochs: 100
+  max_steps: 1000
+  patience: 15
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.0001
+weak:
+  # core_only needs independently justified single-owner rows. Omit it otherwise.
+  methods: [fixed, joint_relative, joint_absolute, interval_relative, optimistic_relative, random_assignment, ensemble, aggregate, no_geometry, no_background_budget]
+  ranks: [2, 4, 8]
+  hidden_dims: [0, 64]
+  blocks_per_step: 1
+  ensemble_members: 3
+  max_bound_queries: 10000
+  aggregate_background: fixed_observed
+comparisons:
+  enabled: true
+  include_type_oracle: false
+  ranks: [2, 4, 8]
+  epochs: 100
+  patience: 15
+  hidden_dim: 64
+evaluation:
+  bootstrap_repetitions: 2000

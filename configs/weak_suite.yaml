@@ -1,0 +1,16 @@
+# Tiny cross-validation integration test; NOT a scientific power calculation.
+base_config: weak_demo.yaml
+output: ../runs/weak_suite
+engine: weak
+folds: 3
+split_seed: 7
+val_fraction: 0.25
+seeds: [7, 17]
+variants:
+  main: {}
+  no_covariates:
+    weak:
+      remove_covariates: true
+      methods: [fixed, joint_relative]
+    comparisons:
+      enabled: false

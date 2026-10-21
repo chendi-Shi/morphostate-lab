@@ -26,7 +26,7 @@ def xenium_inputs(tmp_path):
         features.create_dataset("feature_type", data=np.array(["Gene Expression", "Gene Expression", "Negative Control Probe"], dtype="S"))
     cells_path = tmp_path / "cells.csv"
     pd.DataFrame({"cell_id": ["c", "a", "b"], "cell_type": ["C", "A", "B"],
-                  "x_centroid": [30, 10, 20]}).to_csv(cells_path, index=False)
+                  "x_centroid": [30, 10, 20], "y_centroid": [300, 100, 200]}).to_csv(cells_path, index=False)
     feature_path = tmp_path / "features.npz"
     np.savez(feature_path, cell_ids=np.array(["b", "c", "a"]), features=np.array([[20, 21], [30, 31], [10, 11]]))
     feature_path.with_suffix(".json").write_text(json.dumps({"feature_source": "image", "feature_encoder": {
@@ -46,6 +46,8 @@ def test_import_joins_every_input_by_cell_id_and_excludes_controls(xenium_inputs
     assert result.cells["cell_id"].tolist() == ["slide1::a", "slide1::b", "slide1::c"]
     assert result.cells["cell_type"].tolist() == ["A", "B", "C"]
     assert result.cells["x_centroid"].tolist() == ["10", "20", "30"]
+    assert result.cells["y_centroid"].tolist() == ["100", "200", "300"]
+    assert result.cells["source_cell_id"].tolist() == ["a", "b", "c"]
     np.testing.assert_array_equal(result.counts.toarray(), [[1, 0], [0, 2], [3, 4]])
     np.testing.assert_array_equal(result.features, [[10, 11], [20, 21], [30, 31]])
     np.testing.assert_array_equal(result.covariates, [[1], [2], [3]])
@@ -134,3 +136,20 @@ def test_merge_preserves_multiple_slides_for_same_donor(xenium_inputs, tmp_path)
     assert result.cells["cell_id"].is_unique
     assert result.cells["donor_id"].nunique() == 1
     assert result.cells["slide_id"].nunique() == 2
+
+
+def test_merge_keeps_classifier_fit_provenance_for_leakage_checks(xenium_inputs, tmp_path):
+    from morphostate.covariates import check_covariate_provenance
+    first, second = tmp_path / "one", tmp_path / "two"
+    import_xenium(**xenium_inputs, output=first)
+    import_xenium(**{**xenium_inputs, "slide_id": "slide2"}, output=second)
+    for path, fit_donors in ((first, ["train"]), (second, ["test"])):
+        dataset = load_dataset(path)
+        dataset.provenance.update(covariate_fit_donors=fit_donors, covariate_selection_donors=["validation"])
+        save_dataset(dataset, path)
+    merge_datasets([first, second], tmp_path / "merged")
+    provenance = load_dataset(tmp_path / "merged").provenance
+    assert provenance["covariate_fit_donors"] == ["test", "train"]
+    assert provenance["covariate_selection_donors"] == ["validation"]
+    with pytest.raises(ValueError, match="outside this training fold"):
+        check_covariate_provenance(provenance, {"train": ["train"], "val": ["validation"], "test": ["test"]})

@@ -24,4 +24,9 @@ training:
 evaluation:
   bootstrap_repetitions: 1000
   permutation_repeats: 3
+comparisons:
+  enabled: true
+  epochs: 20
+  patience: 5
+  ranks: [2, 4]
 

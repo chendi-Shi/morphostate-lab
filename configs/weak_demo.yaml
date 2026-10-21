@@ -1,0 +1,36 @@
+# Fast software verification only; use a NEW output for every run.
+data: ../data/weak_demo
+graphs: ../data/weak_demo_graphs
+output: ../runs/weak_demo
+seed: 7
+split:
+  val_fraction: 0.2
+  test_fraction: 0.2
+preprocess:
+  max_genes: 8
+  min_train_cells: 1
+  max_dense_elements: 1000000
+training:
+  device: cpu
+  epochs: 3
+  max_steps: 8
+  patience: 3
+  batch_size: 64
+  lr: 0.01
+weak:
+  methods: [fixed, joint_relative, joint_absolute, interval_relative, optimistic_relative, core_only, random_assignment, ensemble, aggregate, no_geometry, no_background_budget]
+  ranks: [2]
+  hidden_dims: [0]
+  blocks_per_step: 2
+  ensemble_members: 2
+  max_bound_queries: 5000
+  aggregate_background: fixed_observed
+comparisons:
+  enabled: true
+  include_type_oracle: false
+  ranks: [2]
+  epochs: 3
+  patience: 3
+  hidden_dim: 8
+evaluation:
+  bootstrap_repetitions: 100

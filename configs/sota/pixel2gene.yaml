@@ -1,0 +1,27 @@
+# Prepared embeddings/model and registered common-mask mapping are required.
+# A full held-out-patient training adaptation must be committed and pinned.
+name: Pixel2Gene
+checkout: /path/to/Pixel2Gene
+revision: 4f690ca2c629cc1a079fd07bf16ab2044e8cc460
+locked_run: ../../runs/xenium_pilot
+output: ../../runs/pixel2gene_reproduction
+commands:
+  - cwd: scripts
+    argv: [/path/to/pixel2gene/python, impute_filter_predict.py, /path/to/test-prefix-, --output_train, /path/to/train-output/, --output_predict, '{output}/prediction/', --device, cuda, --emb_type, hipt_raw]
+checkpoints:
+  - /path/to/train-output/states/00/model.pt
+  - /path/to/train-output/meta.npz
+  - /path/to/train-output/model_meta.pkl
+declaration:
+  training_donors: [REPLACE_WITH_LOCKED_TRAIN_DONORS]
+  validation_donors: [REPLACE_WITH_LOCKED_VAL_DONORS]
+  encoder: HIPT; record encoder checkpoint and source
+  input_mode: image
+  pretraining_overlap: unknown; audit before publication
+conversion:
+  adapter: pixel2gene_pickles
+  source: '{output}/prediction/cnts-super'
+  mapping_path: /path/to/common_mask_pixel_mapping.npz
+  genes_path: '{output}/prediction/predict-gene-names.txt'
+  trust_pickle: true
+  training_target_normalization: raw_counts

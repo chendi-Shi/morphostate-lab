@@ -1,0 +1,14 @@
+# First run both commands with identical seeds/donor/pair/strength parameters:
+# morphostate stress-case --output data/stress
+# morphostate stress-case --output data/stress_excluded --exclude-null
+base_config: stress.yaml
+output: ../runs/stress_suite
+engine: weak
+folds: 3
+split_seed: 7
+val_fraction: 0.25
+seeds: [7, 17, 29]
+variants:
+  null_feasible: {}
+  null_excluded:
+    graphs: ../data/stress_excluded/graphs
