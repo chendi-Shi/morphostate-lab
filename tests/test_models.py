@@ -76,17 +76,24 @@ def test_zero_image_features_cannot_recalibrate_baseline_intercept(hidden_dim):
     torch.testing.assert_close(model.log_rate(x, c), baseline.log_rate(None, c), rtol=0, atol=0)
 
 
-def test_ridge_residual_and_collinear_covariates():
+@pytest.mark.parametrize("correlation_scale", [0.0, 2.0])
+def test_ridge_residual_and_collinear_covariates(correlation_scale):
     rng = np.random.default_rng(8)
-    x = rng.normal(size=(200, 2))
-    c = rng.normal(size=(200, 1))
-    c = np.column_stack((c, c, np.ones(200)))
-    target = 2 * c[:, :1] + 3 * x[:, :1] + 1
-    predictor = RidgePredictor("residual", alpha=0).fit(x, c, target)
-    baseline = RidgePredictor("covariate", alpha=0).fit(x, c, target)
-    assert np.mean((predictor.predict(x, c) - target) ** 2) < 0.05
-    assert np.mean((baseline.predict(x, c) - target) ** 2) > 5
-    assert np.isfinite(predictor.predict(x, c)).all()
+    c = rng.normal(size=(300, 1))
+    x = rng.normal(size=(300, 2)) + correlation_scale * c @ np.array([[1.0, -0.7]])
+    c = np.column_stack((c, c, np.ones(300)))
+    target = 2 * c[:, :1] + 3 * x[:, :1] - 1.5 * x[:, 1:] + 1
+    predictor = RidgePredictor("residual", alpha=0).fit(x[:200], c[:200], target[:200])
+    baseline = RidgePredictor("covariate", alpha=0).fit(x[:200], c[:200], target[:200])
+    assert "covariate_to_image" in predictor.components_
+    # Exact additive linear data should be recovered to numerical precision,
+    # including on held-out rows with correlated image and covariate features.
+    np.testing.assert_allclose(predictor.predict(x, c), target, rtol=1e-10, atol=1e-10)
+    assert np.mean((baseline.predict(x[200:], c[200:]) - target[200:]) ** 2) > 5
+    # Check that the saved nuisance coefficients suffice for prediction.
+    restored = RidgePredictor("residual", alpha=0)
+    restored.components_ = copy.deepcopy(predictor.components_)
+    np.testing.assert_array_equal(restored.predict(x[200:], c[200:]), predictor.predict(x[200:], c[200:]))
 
 
 def test_conditional_learns_signal_and_training_is_reproducible():

@@ -1,15 +1,27 @@
 import numpy as np
 import pandas as pd
-
-from morphostate.metrics import bootstrap_donor_gain, donor_metrics, poisson_deviance, within_donor_type_permutation
-from morphostate.experiment import fit_scaler, select_genes
 from scipy import sparse
+
+from morphostate.experiment import fit_scaler, select_genes
+from morphostate.metrics import (
+    bootstrap_donor_gain,
+    donor_metrics,
+    mean_gene_pcc,
+    poisson_deviance,
+    within_donor_type_permutation,
+)
 
 
 def test_deviance_zero_and_zero_count_finite():
     y = np.array([[0., 2.], [4., 1.]])
     assert np.allclose(poisson_deviance(y, y), 0, atol=1e-8)
     assert np.isfinite(poisson_deviance(y, np.ones_like(y))).all()
+
+
+def test_float32_constant_predictions_have_undefined_correlation():
+    y = np.arange(120, dtype=np.float32).reshape(40, 3)
+    prediction = np.tile(np.array([0.1234567, 1.234567, 4.567891], dtype=np.float32), (40, 1))
+    assert mean_gene_pcc(y, prediction) is None
 
 
 def test_bootstrap_uses_donors_not_cells():

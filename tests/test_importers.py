@@ -1,5 +1,5 @@
-from dataclasses import replace
 import json
+from dataclasses import replace
 
 import h5py
 import numpy as np

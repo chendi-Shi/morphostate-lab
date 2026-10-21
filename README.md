@@ -12,7 +12,7 @@
 | --- | --- | --- |
 | `image_ridge` | 图像特征 → 标准化 log 表达 | 直接表达预测基线 |
 | `covariate_ridge` | 协变量 → 标准化 log 表达 | 组成等已知因素的线性基线 |
-| `residual_ridge` | 先拟合协变量，再用图像拟合训练残差 | 判断复杂模型是否优于简单残差学习 |
+| `residual_ridge` | 对图像和表达分别去除协变量回归项，再拟合残差映射 | 判断复杂模型是否优于经典部分回归 |
 | `covariate_nb` | 协变量 → 负二项计数模型 | 包含测量深度的计数基线 |
 | `conditional_nb` | 冻结已训练的协变量 NB，再学习低秩图像增量 | 检查图像增量及 rank 选择 |
 
@@ -21,6 +21,8 @@
 实验流程按供者划分训练、验证和测试集；标准化、检测过滤和方差选基因仅拟合训练供者。NB 早停和 rank 选择使用验证供者加权 NLL；被选中的条件模型才进入测试报告。评价包含患者等权指标、患者 bootstrap，以及同供者同粗类型内的图像置换。后者是诊断性负对照，不提供有效性已证明的条件检验 p 值。
 
 完整规则及解释边界见 [protocol.md](docs/protocol.md)。
+
+软件验证：本地 **77 项测试通过**，lint与合成数据全流程通过。具体环境、覆盖范围及未验证部分见 [verification.md](docs/verification.md)；最新 CI 状态见 [Actions](https://github.com/chendi-Shi/morphostate-lab/actions)。
 
 ## 安装
 
@@ -86,7 +88,9 @@ python -m pytest -q
 python -m ruff check src tests
 ```
 
-这些是可执行检查命令；README 不将尚未运行的检查描述为已通过。
+验证记录见 GitHub Actions；合成测试和示例通过不代表真实患者效果。
+
+第三方模型导出预测后，可用 `morphostate evaluate-external` 在锁定测试ID和相同表达单位下比较。格式、声明和命令见 [external_comparisons.md](docs/external_comparisons.md)。评分接口已实现，第三方训练与复现尚未完成。
 
 ## 没有测试 RNA 的推理
 

@@ -9,6 +9,7 @@ import yaml
 
 from morphostate.data import load_dataset, save_dataset
 from morphostate.experiment import predict_from_checkpoint, run_experiment
+from morphostate.external import evaluate_external
 from morphostate.synthetic import make_synthetic
 
 
@@ -44,6 +45,20 @@ def test_run_preserves_undefined_metrics_and_checkpoint_predicts_without_rna(tmp
     stored = json.loads((output / "metrics.json").read_text(encoding="utf-8"))
     assert stored["models"]["covariate_nb"]["within_type_pcc"] is None
     split = pd.read_csv(output / "split.csv")
+    # A frozen external export of the same baseline must reproduce its scores.
+    with np.load(output / "test_predictions.npz") as bundle:
+        external_path = tmp_path / "external.npz"
+        np.savez(external_path, cell_ids=bundle["cell_ids"], gene_ids=bundle["gene_ids"], rates=bundle["covariate_nb"])
+    declaration_path = tmp_path / "external.json"
+    declaration_path.write_text(json.dumps({
+        "training_donors": split.loc[split.split == "train", "donor_id"].unique().tolist(),
+        "validation_donors": split.loc[split.split == "val", "donor_id"].unique().tolist(),
+        "code_revision": "test_fixture", "encoder": "synthetic", "input_mode": "image", "pretraining_overlap": "none"
+    }), encoding="utf-8")
+    provenance = json.loads((output / "provenance.json").read_text(encoding="utf-8"))
+    evaluated = evaluate_external(output, external_path, provenance["median_train_library"],
+                                  "same_baseline", declaration_path, tmp_path / "external_run")
+    assert abs(evaluated["versus_covariate_nb"]["mean_deviance_gain"]) < 1e-6
     test_ids = split.loc[split["split"] == "test", "cell_id"].tolist()
     lookup = {cell: index for index, cell in enumerate(data.cells.cell_id)}
     indices = np.array([lookup[cell] for cell in test_ids])
@@ -60,6 +75,11 @@ def test_run_preserves_undefined_metrics_and_checkpoint_predicts_without_rna(tmp
         np.testing.assert_allclose(predicted["rates"], expected["conditional_nb"], rtol=1e-5, atol=1e-6)
     metadata = json.loads(prediction_path.with_suffix(".json").read_text(encoding="utf-8"))
     assert metadata["mode"] == "synthetic"
+
+
+def test_predict_rejects_suffix_before_numpy_can_append_it(tmp_path):
+    with pytest.raises(ValueError, match="end in .npz"):
+        predict_from_checkpoint("unused.pt", "unused.npz", "unused.npz", tmp_path / "missing_suffix")
 
 
 def test_run_rejects_rna_derived_image_features_before_training(tmp_path):

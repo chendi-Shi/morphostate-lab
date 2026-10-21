@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import json
+from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from scipy import sparse
-
 
 CELL_COLUMNS = ("cell_id", "donor_id", "slide_id", "cell_type")
 SOURCE_TYPES = {"image", "rna_oracle", "synthetic"}

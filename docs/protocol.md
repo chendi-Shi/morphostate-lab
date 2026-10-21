@@ -20,7 +20,7 @@ s_i = library_size_i / median_training_library_size
 
 先拟合仅协变量的基线 `b`，随后复制并冻结该基线，再训练低秩图像增量。模型学习逐基因的正 dispersion。这里的“低秩状态”只是参数化的隐变量；没有正交性、唯一性或可识别性保证，不能直接把某个隐维度命名为确定的生物通路。
 
-当前版本包括 image ridge、covariate ridge、residual ridge、协变量 NB 和条件 NB。Residual ridge 是先拟合协变量回归，再拟合训练残差；**当前并未实现 donor cross-fitting**。Partial CCA、污染生成模型和具有状态可识别性保证的算法仍属于后续扩展，不能在结果中声称已与其比较。
+当前版本包括 image ridge、covariate ridge、residual ridge、协变量 NB 和条件 NB。Residual ridge 分别用协变量拟合表达与图像特征，再用图像残差拟合表达残差；所有变换仅拟合训练数据。**当前并未实现 donor cross-fitting**。Partial CCA、污染生成模型和具有状态可识别性保证的算法仍属于后续扩展，不能在结果中声称已与其比较。
 
 负二项训练使用观测计数和 library size；推理输出的是标准暴露量下的 rate，不要求测试 RNA。评估 count NLL 时使用测试 library size 作为 exposure 属于**给定测量深度的条件评分**，不表示模型能仅凭 H&E 预测绝对 RNA 总量。
 

@@ -182,8 +182,11 @@ def model_from_config(config: dict[str, Any]) -> NBCovariateModel | ConditionalN
 class RidgePredictor:
     """Ridge baselines with a separate, unpenalized intercept.
 
-    Residual mode first fits covariates and then fits an image model to in-sample
-    residuals. This intentionally simple comparator is *not* cross-fitted.
+    Residual mode regresses both targets and image features on the covariates,
+    then fits an image model between their training-set residuals. Prediction
+    uses the saved covariate-to-image nuisance fit to residualize new features.
+    With alpha=0 this is classical linear partial regression, including for
+    collinear covariates. The nuisance fits are *not* cross-fitted.
     """
 
     def __init__(self, mode: str = "image", alpha: float = 1.0) -> None:
@@ -234,6 +237,8 @@ class RidgePredictor:
             self.components_["covariate"] = self._fit_component(c, target)
         if self.mode == "residual":
             target = target - self._predict_component(c, self.components_["covariate"])
+            self.components_["covariate_to_image"] = self._fit_component(c, x)
+            x = x - self._predict_component(c, self.components_["covariate_to_image"])
         if self.mode in {"image", "residual"}:
             self.components_["image"] = self._fit_component(x, target)
         return self
@@ -244,8 +249,12 @@ class RidgePredictor:
         x, c = self._array(x), self._array(c)
         if len(x) != len(c):
             raise ValueError("Image and covariate row counts differ")
-        predictions = [
-            self._predict_component(x if name == "image" else c, component)
-            for name, component in self.components_.items()
-        ]
-        return sum(predictions)
+        if self.mode == "covariate":
+            return self._predict_component(c, self.components_["covariate"])
+        if self.mode == "residual":
+            x = x - self._predict_component(c, self.components_["covariate_to_image"])
+            return (
+                self._predict_component(c, self.components_["covariate"])
+                + self._predict_component(x, self.components_["image"])
+            )
+        return self._predict_component(x, self.components_["image"])

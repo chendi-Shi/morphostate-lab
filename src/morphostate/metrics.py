@@ -3,7 +3,6 @@
 import numpy as np
 import pandas as pd
 
-
 UNKNOWN_CELL_TYPES = {"", "unknown", "unassigned", "unannotated", "na", "n/a", "none", "nan", "<na>", "missing"}
 
 
@@ -30,8 +29,10 @@ def poisson_deviance(y, mu):
 
 
 def mean_gene_pcc(y, pred):
-    a = np.asarray(y, dtype=np.float64) - np.mean(y, axis=0)
-    b = np.asarray(pred, dtype=np.float64) - np.mean(pred, axis=0)
+    a, b = np.asarray(y, dtype=np.float64), np.asarray(pred, dtype=np.float64)
+    # Center after conversion: float32 means can manufacture tiny variance in
+    # an exactly constant predictor and turn an undefined PCC into a number.
+    a, b = a - a.mean(axis=0), b - b.mean(axis=0)
     denom = np.sqrt(np.sum(a * a, axis=0) * np.sum(b * b, axis=0))
     usable = denom > 1e-12
     if not np.any(usable):
