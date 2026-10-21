@@ -1,0 +1,33 @@
+# All paths are relative to THIS YAML, not the shell working directory.
+# First prepare data with import-xenium and merge. No data are downloaded here.
+data: ../data/prepared/xenium
+output: ../runs/xenium_pilot
+seed: 7
+allow_oracle: false
+split:
+  val_fraction: 0.2
+  test_fraction: 0.2
+  # Prefer a locked explicit donor split for a paper, e.g.:
+  # explicit:
+  #   train: [B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, B11]
+  #   val: [B12, B13, B14]
+  #   test: [B15, B16, B17]
+preprocess:
+  max_genes: 256
+  min_train_cells: 20
+  max_cells_per_donor: 2000
+  max_dense_elements: 40000000
+training:
+  device: auto
+  epochs: 150
+  batch_size: 256
+  lr: 0.001
+  weight_decay: 0.001
+  patience: 20
+  hidden_dim: 0
+  ranks: [2, 4, 8, 16]
+  ridge_alpha: 10.0
+evaluation:
+  bootstrap_repetitions: 2000
+  permutation_repeats: 5
+

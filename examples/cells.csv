@@ -1,0 +1,4 @@
+cell_id,donor_id,slide_id,cell_type,x_px,y_px
+cell_001,donor_01,slide_01,macrophage,512,512
+cell_002,donor_01,slide_01,fibroblast,1024,512
+

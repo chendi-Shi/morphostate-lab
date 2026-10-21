@@ -1,0 +1,27 @@
+# Synthetic plumbing test. No real biological performance claim.
+data: ../data/demo
+output: ../runs/demo
+seed: 7
+allow_oracle: false
+split:
+  val_fraction: 0.2
+  test_fraction: 0.2
+preprocess:
+  max_genes: 32
+  min_train_cells: 3
+  max_cells_per_donor: 80
+  max_dense_elements: 10000000
+training:
+  device: cpu
+  epochs: 60
+  batch_size: 128
+  lr: 0.02
+  weight_decay: 0.0001
+  patience: 12
+  hidden_dim: 0
+  ranks: [2, 4]
+  ridge_alpha: 10.0
+evaluation:
+  bootstrap_repetitions: 1000
+  permutation_repeats: 3
+

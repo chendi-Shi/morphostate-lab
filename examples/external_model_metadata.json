@@ -1,0 +1,8 @@
+{
+  "training_donors": ["replace_with_real_training_donor"],
+  "validation_donors": ["replace_with_real_validation_donor"],
+  "code_revision": "replace_with_author_repo_commit_and_local_patch",
+  "encoder": "replace_with_exact_encoder_weights_and_transform",
+  "input_mode": "image",
+  "pretraining_overlap": "unverified; replace after source audit"
+}
