@@ -1,0 +1,1173 @@
+{
+  "date": "2026-10-22",
+  "source_code_commit": "7e3461e72babbf66d36110d3d09fa0bbd1f48178",
+  "scope": "Previously inspected synthetic development data; no author SOTA networks or real patient predictions. Not an independent test.",
+  "data_generation": {
+    "seed": 23,
+    "donors": 8,
+    "cells_per_donor": 20,
+    "genes": 8,
+    "features": 8
+  },
+  "graph_generation": {
+    "seed": 23,
+    "ambiguous_fraction": 0.6,
+    "background_fraction": 0.1,
+    "geometry_fraction": 0.25
+  },
+  "seeds": [
+    7,
+    17,
+    29
+  ],
+  "runs": [
+    {
+      "seed": 7,
+      "metrics": {
+        "covariate_nb": {
+          "poisson_deviance": 3.018797219813817,
+          "log_rate_mse": 0.39868970215320587,
+          "gene_pcc": 0.4230294655699681,
+          "within_type_pcc": 0.06950598420014834,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "fixed": {
+          "poisson_deviance": 1.944675534423302,
+          "log_rate_mse": 0.2961183041334152,
+          "gene_pcc": 0.6063495937862518,
+          "within_type_pcc": 0.43330834916152083,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "joint_relative": {
+          "poisson_deviance": 2.998998218962328,
+          "log_rate_mse": 0.39702971279621124,
+          "gene_pcc": 0.42645553961727056,
+          "within_type_pcc": 0.0853169917292503,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "joint_absolute": {
+          "poisson_deviance": 2.805840749554208,
+          "log_rate_mse": 0.3736487030982971,
+          "gene_pcc": 0.48873727532539346,
+          "within_type_pcc": 0.24139589920563276,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "train_mean": {
+          "poisson_deviance": 4.826271862301173,
+          "log_rate_mse": 0.748453679334171,
+          "gene_pcc": null,
+          "within_type_pcc": null,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "donor_crossfit_residual_ridge": {
+          "poisson_deviance": 2.2278318544238687,
+          "log_rate_mse": 0.2843104329407246,
+          "gene_pcc": 0.6078990548281655,
+          "within_type_pcc": 0.42786091686350924,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "reduced_rank_regression": {
+          "poisson_deviance": 1.9100875453290023,
+          "log_rate_mse": 0.26974308306828376,
+          "gene_pcc": 0.6139826025595434,
+          "within_type_pcc": 0.4275677105430525,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "residual_pca_ridge": {
+          "poisson_deviance": 1.9938255944194916,
+          "log_rate_mse": 0.2718319880105541,
+          "gene_pcc": 0.6099451681081626,
+          "within_type_pcc": 0.43458841153013983,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "regularized_partial_cca": {
+          "poisson_deviance": 1.9465585308859432,
+          "log_rate_mse": 0.2682734302946713,
+          "gene_pcc": 0.6161095077073452,
+          "within_type_pcc": 0.44067234396280724,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "poisson_mlp": {
+          "poisson_deviance": 2.530729933256354,
+          "log_rate_mse": 0.34569263458251953,
+          "gene_pcc": 0.5354507278786949,
+          "within_type_pcc": 0.29810191609334463,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "covariate_ridge": {
+          "poisson_deviance": 3.222678748919451,
+          "log_rate_mse": 0.36960312917431515,
+          "gene_pcc": 0.42947897950386155,
+          "within_type_pcc": 0.06813060780058527,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "image_ridge": {
+          "poisson_deviance": 2.4660035098874644,
+          "log_rate_mse": 0.28602048133502583,
+          "gene_pcc": 0.5993181956890559,
+          "within_type_pcc": 0.3248918530281172,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "residual_ridge": {
+          "poisson_deviance": 2.101252473659958,
+          "log_rate_mse": 0.2804412290931786,
+          "gene_pcc": 0.6073276645126138,
+          "within_type_pcc": 0.42185917759029834,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        }
+      },
+      "selection": {
+        "fixed": {
+          "candidates": [
+            {
+              "rank": 2,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.0804072356036354,
+              "members": [
+                {
+                  "best_epoch": 194,
+                  "best_val_deviance": 2.0804072356036354,
+                  "optimizer_steps": 468,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 234,
+                  "inner_solve_seconds": 0.0008774036541581154,
+                  "inner_solves": 0,
+                  "label_precomputation_seconds": 0.0002576000988483429,
+                  "training_seconds": 0.6977870003320277,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 468
+            },
+            {
+              "rank": 4,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.215006894920587,
+              "members": [
+                {
+                  "best_epoch": 90,
+                  "best_val_deviance": 2.215006894920587,
+                  "optimizer_steps": 260,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 130,
+                  "inner_solve_seconds": 0.0004587997682392597,
+                  "inner_solves": 0,
+                  "label_precomputation_seconds": 0.00017629936337471008,
+                  "training_seconds": 0.3706041001714766,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 260
+            },
+            {
+              "rank": 8,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.1606259507345116,
+              "members": [
+                {
+                  "best_epoch": 49,
+                  "best_val_deviance": 2.1606259507345116,
+                  "optimizer_steps": 178,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 89,
+                  "inner_solve_seconds": 0.00035879993811249733,
+                  "inner_solves": 0,
+                  "label_precomputation_seconds": 0.0002223001793026924,
+                  "training_seconds": 0.2770690000616014,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 178
+            }
+          ],
+          "selected": {
+            "rank": 2,
+            "hidden_dim": 0
+          },
+          "criterion": "locked validation donor-macro fixed-label Poisson deviance"
+        },
+        "joint_relative": {
+          "candidates": [
+            {
+              "rank": 2,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.598304894504534,
+              "members": [
+                {
+                  "best_epoch": 1,
+                  "best_val_deviance": 2.598304894504534,
+                  "optimizer_steps": 82,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 41,
+                  "inner_solve_seconds": 0.5427753981202841,
+                  "inner_solves": 164,
+                  "label_precomputation_seconds": 0.0002033999189734459,
+                  "training_seconds": 0.6899279002100229,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 82
+            },
+            {
+              "rank": 4,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.5965677924356534,
+              "members": [
+                {
+                  "best_epoch": 1,
+                  "best_val_deviance": 2.5965677924356534,
+                  "optimizer_steps": 82,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 41,
+                  "inner_solve_seconds": 0.6563331969082355,
+                  "inner_solves": 164,
+                  "label_precomputation_seconds": 0.00020289979875087738,
+                  "training_seconds": 0.8420033999718726,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 82
+            },
+            {
+              "rank": 8,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.5880966091270707,
+              "members": [
+                {
+                  "best_epoch": 1,
+                  "best_val_deviance": 2.5880966091270707,
+                  "optimizer_steps": 82,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 41,
+                  "inner_solve_seconds": 0.7731919982470572,
+                  "inner_solves": 164,
+                  "label_precomputation_seconds": 0.00042789988219738007,
+                  "training_seconds": 0.997051500249654,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 82
+            }
+          ],
+          "selected": {
+            "rank": 8,
+            "hidden_dim": 0
+          },
+          "criterion": "locked validation donor-macro fixed-label Poisson deviance"
+        },
+        "joint_absolute": {
+          "candidates": [
+            {
+              "rank": 2,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.595082267235161,
+              "members": [
+                {
+                  "best_epoch": 16,
+                  "best_val_deviance": 2.595082267235161,
+                  "optimizer_steps": 112,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 56,
+                  "inner_solve_seconds": 0.802790803834796,
+                  "inner_solves": 224,
+                  "label_precomputation_seconds": 0.000251199584454298,
+                  "training_seconds": 1.0111651001498103,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 112
+            },
+            {
+              "rank": 4,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.597743083349087,
+              "members": [
+                {
+                  "best_epoch": 7,
+                  "best_val_deviance": 2.597743083349087,
+                  "optimizer_steps": 92,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 46,
+                  "inner_solve_seconds": 0.6595121948048472,
+                  "inner_solves": 184,
+                  "label_precomputation_seconds": 0.00019109947606921196,
+                  "training_seconds": 0.8291536998003721,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 92
+            },
+            {
+              "rank": 8,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.5157848053230607,
+              "members": [
+                {
+                  "best_epoch": 13,
+                  "best_val_deviance": 2.5157848053230607,
+                  "optimizer_steps": 106,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 53,
+                  "inner_solve_seconds": 0.8143205009400845,
+                  "inner_solves": 212,
+                  "label_precomputation_seconds": 0.0002133999951183796,
+                  "training_seconds": 1.030905299820006,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 106
+            }
+          ],
+          "selected": {
+            "rank": 8,
+            "hidden_dim": 0
+          },
+          "criterion": "locked validation donor-macro fixed-label Poisson deviance"
+        }
+      }
+    },
+    {
+      "seed": 17,
+      "metrics": {
+        "covariate_nb": {
+          "poisson_deviance": 3.0626644064487976,
+          "log_rate_mse": 0.40168628096580505,
+          "gene_pcc": 0.42267570657932396,
+          "within_type_pcc": 0.06954613134103252,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "fixed": {
+          "poisson_deviance": 2.010749172248218,
+          "log_rate_mse": 0.30135077238082886,
+          "gene_pcc": 0.6032656354940745,
+          "within_type_pcc": 0.4305167140024078,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "joint_relative": {
+          "poisson_deviance": 3.043808150369861,
+          "log_rate_mse": 0.39973191916942596,
+          "gene_pcc": 0.42751776169899536,
+          "within_type_pcc": 0.08361594063037908,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "joint_absolute": {
+          "poisson_deviance": 2.824871471371007,
+          "log_rate_mse": 0.37844957411289215,
+          "gene_pcc": 0.5009615923552196,
+          "within_type_pcc": 0.21428325488108682,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "train_mean": {
+          "poisson_deviance": 4.826271862301173,
+          "log_rate_mse": 0.748453679334171,
+          "gene_pcc": null,
+          "within_type_pcc": null,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "donor_crossfit_residual_ridge": {
+          "poisson_deviance": 2.2278318544238687,
+          "log_rate_mse": 0.2843104329407246,
+          "gene_pcc": 0.6078990548281655,
+          "within_type_pcc": 0.42786091686350924,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "reduced_rank_regression": {
+          "poisson_deviance": 1.9100875453290023,
+          "log_rate_mse": 0.26974308306828376,
+          "gene_pcc": 0.6139826025595434,
+          "within_type_pcc": 0.4275677105430525,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "residual_pca_ridge": {
+          "poisson_deviance": 1.9938255944194916,
+          "log_rate_mse": 0.2718319880105541,
+          "gene_pcc": 0.6099451681081626,
+          "within_type_pcc": 0.43458841153013983,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "regularized_partial_cca": {
+          "poisson_deviance": 1.9465585308859432,
+          "log_rate_mse": 0.2682734302946713,
+          "gene_pcc": 0.6161095077073452,
+          "within_type_pcc": 0.44067234396280724,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "poisson_mlp": {
+          "poisson_deviance": 2.102152035139279,
+          "log_rate_mse": 0.3169472962617874,
+          "gene_pcc": 0.5866729757727353,
+          "within_type_pcc": 0.3743643640728792,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "covariate_ridge": {
+          "poisson_deviance": 3.222678748919451,
+          "log_rate_mse": 0.36960312917431515,
+          "gene_pcc": 0.42947897950386155,
+          "within_type_pcc": 0.06813060780058527,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "image_ridge": {
+          "poisson_deviance": 2.4660035098874644,
+          "log_rate_mse": 0.28602048133502583,
+          "gene_pcc": 0.5993181956890559,
+          "within_type_pcc": 0.3248918530281172,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "residual_ridge": {
+          "poisson_deviance": 2.101252473659958,
+          "log_rate_mse": 0.2804412290931786,
+          "gene_pcc": 0.6073276645126138,
+          "within_type_pcc": 0.42185917759029834,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        }
+      },
+      "selection": {
+        "fixed": {
+          "candidates": [
+            {
+              "rank": 2,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.0243823108640435,
+              "members": [
+                {
+                  "best_epoch": 121,
+                  "best_val_deviance": 2.0243823108640435,
+                  "optimizer_steps": 322,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 161,
+                  "inner_solve_seconds": 0.000633798073977232,
+                  "inner_solves": 0,
+                  "label_precomputation_seconds": 0.0002064998261630535,
+                  "training_seconds": 0.5017657000571489,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 322
+            },
+            {
+              "rank": 4,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.0917971969330345,
+              "members": [
+                {
+                  "best_epoch": 40,
+                  "best_val_deviance": 2.0917971969330345,
+                  "optimizer_steps": 158,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 79,
+                  "inner_solve_seconds": 0.0002841949462890625,
+                  "inner_solves": 0,
+                  "label_precomputation_seconds": 0.00022159935906529427,
+                  "training_seconds": 0.23141410015523434,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 158
+            },
+            {
+              "rank": 8,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.0973785424432556,
+              "members": [
+                {
+                  "best_epoch": 23,
+                  "best_val_deviance": 2.0973785424432556,
+                  "optimizer_steps": 126,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 63,
+                  "inner_solve_seconds": 0.0002498975954949856,
+                  "inner_solves": 0,
+                  "label_precomputation_seconds": 0.00024290010333061218,
+                  "training_seconds": 0.1940759001299739,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 126
+            }
+          ],
+          "selected": {
+            "rank": 2,
+            "hidden_dim": 0
+          },
+          "criterion": "locked validation donor-macro fixed-label Poisson deviance"
+        },
+        "joint_relative": {
+          "candidates": [
+            {
+              "rank": 2,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.5860689534034917,
+              "members": [
+                {
+                  "best_epoch": 1,
+                  "best_val_deviance": 2.5860689534034917,
+                  "optimizer_steps": 82,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 41,
+                  "inner_solve_seconds": 0.540627702139318,
+                  "inner_solves": 164,
+                  "label_precomputation_seconds": 0.00021059904247522354,
+                  "training_seconds": 0.6881132000125945,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 82
+            },
+            {
+              "rank": 4,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.5783330141575123,
+              "members": [
+                {
+                  "best_epoch": 1,
+                  "best_val_deviance": 2.5783330141575123,
+                  "optimizer_steps": 82,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 41,
+                  "inner_solve_seconds": 0.6007041013799608,
+                  "inner_solves": 164,
+                  "label_precomputation_seconds": 0.00019240006804466248,
+                  "training_seconds": 0.7666440000757575,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 82
+            },
+            {
+              "rank": 8,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.569529720192103,
+              "members": [
+                {
+                  "best_epoch": 1,
+                  "best_val_deviance": 2.569529720192103,
+                  "optimizer_steps": 82,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 41,
+                  "inner_solve_seconds": 0.5227582990191877,
+                  "inner_solves": 164,
+                  "label_precomputation_seconds": 0.00017610006034374237,
+                  "training_seconds": 0.6628509997390211,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 82
+            }
+          ],
+          "selected": {
+            "rank": 8,
+            "hidden_dim": 0
+          },
+          "criterion": "locked validation donor-macro fixed-label Poisson deviance"
+        },
+        "joint_absolute": {
+          "candidates": [
+            {
+              "rank": 2,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.3944209918384254,
+              "members": [
+                {
+                  "best_epoch": 139,
+                  "best_val_deviance": 2.3944209918384254,
+                  "optimizer_steps": 358,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 179,
+                  "inner_solve_seconds": 2.3970795986242592,
+                  "inner_solves": 716,
+                  "label_precomputation_seconds": 0.000184500589966774,
+                  "training_seconds": 3.016903799958527,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 358
+            },
+            {
+              "rank": 4,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.4100354495665153,
+              "members": [
+                {
+                  "best_epoch": 41,
+                  "best_val_deviance": 2.4100354495665153,
+                  "optimizer_steps": 162,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 81,
+                  "inner_solve_seconds": 1.2705377992242575,
+                  "inner_solves": 324,
+                  "label_precomputation_seconds": 0.00019250018522143364,
+                  "training_seconds": 1.6142564001493156,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 162
+            },
+            {
+              "rank": 8,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.3856759837001658,
+              "members": [
+                {
+                  "best_epoch": 15,
+                  "best_val_deviance": 2.3856759837001658,
+                  "optimizer_steps": 110,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 55,
+                  "inner_solve_seconds": 1.0808303994126618,
+                  "inner_solves": 220,
+                  "label_precomputation_seconds": 0.00020360015332698822,
+                  "training_seconds": 1.373630200047046,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 110
+            }
+          ],
+          "selected": {
+            "rank": 8,
+            "hidden_dim": 0
+          },
+          "criterion": "locked validation donor-macro fixed-label Poisson deviance"
+        }
+      }
+    },
+    {
+      "seed": 29,
+      "metrics": {
+        "covariate_nb": {
+          "poisson_deviance": 3.0742053790786725,
+          "log_rate_mse": 0.3992996960878372,
+          "gene_pcc": 0.42170728502240207,
+          "within_type_pcc": 0.06978945828742886,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "fixed": {
+          "poisson_deviance": 2.0195577271994596,
+          "log_rate_mse": 0.3185838758945465,
+          "gene_pcc": 0.5954671065178534,
+          "within_type_pcc": 0.4095349537446762,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "joint_relative": {
+          "poisson_deviance": 3.042958565200859,
+          "log_rate_mse": 0.3967641294002533,
+          "gene_pcc": 0.4280367893203938,
+          "within_type_pcc": 0.08374074231036194,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "joint_absolute": {
+          "poisson_deviance": 2.696698370927396,
+          "log_rate_mse": 0.3585018813610077,
+          "gene_pcc": 0.5312615728534059,
+          "within_type_pcc": 0.2557513766335659,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "train_mean": {
+          "poisson_deviance": 4.826271862301173,
+          "log_rate_mse": 0.748453679334171,
+          "gene_pcc": null,
+          "within_type_pcc": null,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "donor_crossfit_residual_ridge": {
+          "poisson_deviance": 2.2278318544238687,
+          "log_rate_mse": 0.2843104329407246,
+          "gene_pcc": 0.6078990548281655,
+          "within_type_pcc": 0.42786091686350924,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "reduced_rank_regression": {
+          "poisson_deviance": 1.9100875453290023,
+          "log_rate_mse": 0.26974308306828376,
+          "gene_pcc": 0.6139826025595434,
+          "within_type_pcc": 0.4275677105430525,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "residual_pca_ridge": {
+          "poisson_deviance": 1.9938255944194916,
+          "log_rate_mse": 0.2718319880105541,
+          "gene_pcc": 0.6099451681081626,
+          "within_type_pcc": 0.43458841153013983,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "regularized_partial_cca": {
+          "poisson_deviance": 1.9465585308859432,
+          "log_rate_mse": 0.2682734302946713,
+          "gene_pcc": 0.6161095077073452,
+          "within_type_pcc": 0.44067234396280724,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "poisson_mlp": {
+          "poisson_deviance": 2.165707168852445,
+          "log_rate_mse": 0.3421681970357895,
+          "gene_pcc": 0.5734880261375062,
+          "within_type_pcc": 0.3599566502450315,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "covariate_ridge": {
+          "poisson_deviance": 3.222678748919451,
+          "log_rate_mse": 0.36960312917431515,
+          "gene_pcc": 0.42947897950386155,
+          "within_type_pcc": 0.06813060780058527,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "image_ridge": {
+          "poisson_deviance": 2.4660035098874644,
+          "log_rate_mse": 0.28602048133502583,
+          "gene_pcc": 0.5993181956890559,
+          "within_type_pcc": 0.3248918530281172,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        },
+        "residual_ridge": {
+          "poisson_deviance": 2.101252473659958,
+          "log_rate_mse": 0.2804412290931786,
+          "gene_pcc": 0.6073276645126138,
+          "within_type_pcc": 0.42185917759029834,
+          "known_cell_type_fraction": 1.0,
+          "within_type_evaluable_fraction": 1.0
+        }
+      },
+      "selection": {
+        "fixed": {
+          "candidates": [
+            {
+              "rank": 2,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 1.9149605002444812,
+              "members": [
+                {
+                  "best_epoch": 67,
+                  "best_val_deviance": 1.9149605002444812,
+                  "optimizer_steps": 214,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 107,
+                  "inner_solve_seconds": 0.0010847090743482113,
+                  "inner_solves": 0,
+                  "label_precomputation_seconds": 0.00026880018413066864,
+                  "training_seconds": 0.6543358997441828,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 214
+            },
+            {
+              "rank": 4,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.0215645226892254,
+              "members": [
+                {
+                  "best_epoch": 40,
+                  "best_val_deviance": 2.0215645226892254,
+                  "optimizer_steps": 160,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 80,
+                  "inner_solve_seconds": 0.0006911023519933224,
+                  "inner_solves": 0,
+                  "label_precomputation_seconds": 0.00045499997213482857,
+                  "training_seconds": 0.4456112999469042,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 160
+            },
+            {
+              "rank": 8,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.043210445419966,
+              "members": [
+                {
+                  "best_epoch": 23,
+                  "best_val_deviance": 2.043210445419966,
+                  "optimizer_steps": 126,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 63,
+                  "inner_solve_seconds": 0.0003910018131136894,
+                  "inner_solves": 0,
+                  "label_precomputation_seconds": 0.0002767997793853283,
+                  "training_seconds": 0.2766404999420047,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 126
+            }
+          ],
+          "selected": {
+            "rank": 2,
+            "hidden_dim": 0
+          },
+          "criterion": "locked validation donor-macro fixed-label Poisson deviance"
+        },
+        "joint_relative": {
+          "candidates": [
+            {
+              "rank": 2,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.5846210359828814,
+              "members": [
+                {
+                  "best_epoch": 1,
+                  "best_val_deviance": 2.5846210359828814,
+                  "optimizer_steps": 82,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 41,
+                  "inner_solve_seconds": 0.7467710971832275,
+                  "inner_solves": 164,
+                  "label_precomputation_seconds": 0.0006226995028555393,
+                  "training_seconds": 0.9674626998603344,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 82
+            },
+            {
+              "rank": 4,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.5782602593320196,
+              "members": [
+                {
+                  "best_epoch": 1,
+                  "best_val_deviance": 2.5782602593320196,
+                  "optimizer_steps": 82,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 41,
+                  "inner_solve_seconds": 0.6497244024649262,
+                  "inner_solves": 164,
+                  "label_precomputation_seconds": 0.0002625999040901661,
+                  "training_seconds": 0.8428929001092911,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 82
+            },
+            {
+              "rank": 8,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.5697369969249535,
+              "members": [
+                {
+                  "best_epoch": 1,
+                  "best_val_deviance": 2.5697369969249535,
+                  "optimizer_steps": 82,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 41,
+                  "inner_solve_seconds": 0.6138714971020818,
+                  "inner_solves": 164,
+                  "label_precomputation_seconds": 0.00023319898173213005,
+                  "training_seconds": 0.7902474999427795,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 82
+            }
+          ],
+          "selected": {
+            "rank": 8,
+            "hidden_dim": 0
+          },
+          "criterion": "locked validation donor-macro fixed-label Poisson deviance"
+        },
+        "joint_absolute": {
+          "candidates": [
+            {
+              "rank": 2,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.455798735912434,
+              "members": [
+                {
+                  "best_epoch": 28,
+                  "best_val_deviance": 2.455798735912434,
+                  "optimizer_steps": 136,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 68,
+                  "inner_solve_seconds": 1.0107633983716369,
+                  "inner_solves": 272,
+                  "label_precomputation_seconds": 0.0002243993803858757,
+                  "training_seconds": 1.2863884000107646,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 136
+            },
+            {
+              "rank": 4,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.2893755918463494,
+              "members": [
+                {
+                  "best_epoch": 40,
+                  "best_val_deviance": 2.2893755918463494,
+                  "optimizer_steps": 160,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 80,
+                  "inner_solve_seconds": 1.3024925999343395,
+                  "inner_solves": 320,
+                  "label_precomputation_seconds": 0.00022590020671486855,
+                  "training_seconds": 1.6488159000873566,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 160
+            },
+            {
+              "rank": 8,
+              "hidden_dim": 0,
+              "validation_fixed_poisson_deviance": 2.3614800322780383,
+              "members": [
+                {
+                  "best_epoch": 30,
+                  "best_val_deviance": 2.3614800322780383,
+                  "optimizer_steps": 140,
+                  "configured_step_budget": 1200,
+                  "epochs_completed": 70,
+                  "inner_solve_seconds": 1.0347002036869526,
+                  "inner_solves": 280,
+                  "label_precomputation_seconds": 0.00020780041813850403,
+                  "training_seconds": 1.3177772997878492,
+                  "peak_gpu_allocated_bytes": 0,
+                  "device": "cpu",
+                  "restored_best_validation_checkpoint": true,
+                  "inner_optimizer": "scipy.optimize.linprog(method=highs) for budgeted graphs; exact row maximization otherwise",
+                  "random_sampling": null,
+                  "gradient": "Detached exact inner solution / Danskin subgradient"
+                }
+              ],
+              "configured_total_step_budget": 1200,
+              "actual_total_optimizer_steps": 140
+            }
+          ],
+          "selected": {
+            "rank": 4,
+            "hidden_dim": 0
+          },
+          "criterion": "locked validation donor-macro fixed-label Poisson deviance"
+        }
+      }
+    }
+  ],
+  "training_budget": {
+    "epochs_max": 300,
+    "steps_max": 1200,
+    "patience": 40,
+    "lr": 0.003,
+    "ranks": [
+      2,
+      4,
+      8
+    ],
+    "hidden_dims": [
+      0
+    ],
+    "blocks_per_step": 2
+  },
+  "split": {
+    "train": [
+      "synthetic_d00",
+      "synthetic_d01",
+      "synthetic_d02",
+      "synthetic_d03"
+    ],
+    "val": [
+      "synthetic_d04",
+      "synthetic_d05"
+    ],
+    "development_evaluation": [
+      "synthetic_d06",
+      "synthetic_d07"
+    ]
+  },
+  "elapsed_seconds": 29.937361299991608
+}

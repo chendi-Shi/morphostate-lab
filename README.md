@@ -4,6 +4,8 @@
 
 仓库：[chendi-Shi/morphostate-lab](https://github.com/chendi-Shi/morphostate-lab)。核心训练、稀疏 LP、候选归属图、强基线、消融、多折多种子调度、无测试 RNA 推理和状态评价均已实现。**代码实现不等于已获得 A 类创新、真实患者效果或统计保证。** 本仓库不附带患者数据、第三方授权权重或编造的 SOTA 结果。
 
+**2026-10-22 研究决策：** 放宽训练预算的三个随机种子开发诊断中，`joint_relative` 仍落后于固定标签和降秩回归；该目标降为保守性/失败模式对照，不再作为已有性能支持的主方法。候选新方向、必须击败的最新对手与真实数据准备状态见 [方法重审](docs/method_reassessment_20261022.md)。真实 SOTA 性能比较尚未完成。
+
 - [研究问题、前作、完整比较与失败判据](docs/research_plan.md)
 - [实验协议和科学解释边界](docs/protocol.md)
 - [数学定义、推导、反例与适用条件](docs/theory.md)

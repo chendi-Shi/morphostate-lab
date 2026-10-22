@@ -1,0 +1,55 @@
+data: data
+graphs: graphs
+output: seed_7
+seed: 7
+split:
+  explicit:
+    train:
+    - synthetic_d00
+    - synthetic_d01
+    - synthetic_d02
+    - synthetic_d03
+    val:
+    - synthetic_d04
+    - synthetic_d05
+    test:
+    - synthetic_d06
+    - synthetic_d07
+preprocess:
+  max_genes: 8
+  min_train_cells: 1
+  max_dense_elements: 1000000
+training:
+  device: cpu
+  epochs: 300
+  max_steps: 1200
+  patience: 40
+  batch_size: 64
+  lr: 0.003
+weak:
+  methods:
+  - fixed
+  - joint_relative
+  - joint_absolute
+  ranks:
+  - 2
+  - 4
+  - 8
+  hidden_dims:
+  - 0
+  blocks_per_step: 2
+  ensemble_members: 2
+  max_bound_queries: 5000
+  aggregate_background: fixed_observed
+comparisons:
+  enabled: true
+  include_type_oracle: false
+  ranks:
+  - 2
+  - 4
+  - 8
+  epochs: 300
+  patience: 40
+  hidden_dim: 8
+evaluation:
+  bootstrap_repetitions: 100
